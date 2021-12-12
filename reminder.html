@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	
+	<title>Quote API</title>
+	<meta charset="utf-8"/>
+	<style>
+	
+	
+	</style>
+		
+		
+	
+	<script>
+		var quote;
+	
+		function getQuote() {
+
+			request = new XMLHttpRequest();
+			
+		 	request.open("GET", "https://api.quotable.io/random?maxLength=50", true);
+						
+		    request.onreadystatechange = function() {
+					if (request.readyState == 4 && request.status == 200) {
+
+						var result = request.responseText;
+						
+						
+						
+						var object = JSON.parse(result, function (key, value) {
+						  if (key == "content") {
+							quote = value;
+						  }
+						})
+						
+						//document.getElementById("random1").innerHTM=quote;
+					}	
+				document.getElementById("random1").innerHTML=quote;
+			 }
+		
+				
+			request.send();
+		};
+		
+	</script>
+</head>
+
+
+<body onload="getQuote()">
+
+  <h1> Daily Dose of Inspiration </h1>
+	<div id="random1"> &nbsp; </div>
+	<div id="random"> &nbsp; </div>
+	<div>
+		
+	
+		
+	</div>
+</body>
+</html>
