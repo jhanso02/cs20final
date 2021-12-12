@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .weather_box{
+            padding: 2% 8px 0px 8px;
+            margin-bottom: 6%;
+            width: 20%;
+            color: rgb(82, 182, 185);
+            border-radius: 10px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class='weather_box'>
+        <a class="weatherwidget-io"
+        href="https://forecast7.com/en/42d42n71d11/medford/?unit=us"
+        data-label_1="TUFTS" data-label_2="UNIVERSITY" data-theme="original">TUFTS
+        UNIVERSITY</a>
+    </div>
+    <script>
+        !function(d,s,id){
+            var js,fjs = d.getElementsByTagName(s)[0];
+            if(!d.getElementById(id)){
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://weatherwidget.io/js/widget.min.js';
+                fjs.parentNode.insertBefore(js,fjs);
+            }
+        }
+        (document,'script','weatherwidget-io-js');
+    </script>
+</body>
+</html>
