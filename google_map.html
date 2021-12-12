@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icons</title>
+</head>
+
+
+<body>
+
+<h1>Campus Map</h1>
+
+<div id="googleMap" style="width:50%; height:300px; border-radius: 12px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(42.4085, -71.1183),
+  zoom:15,
+};
+
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+
+// var marker = new google.maps.Marker({
+//   position:new google.maps.LatLng(42.4085, -71.1183),
+//   animation:google.maps.Animation.BOUNCE
+// });
+// marker.setMap(map);
+
+// google.maps.event.addListener(marker,'click',function() {
+//   var pos = map.getZoom();
+//   map.setZoom(9);
+//   map.setCenter(marker.getPosition());
+//   window.setTimeout(function() {map.setZoom(pos);},3000);
+// });
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBIktyyp-E6l_1Hjn2Io9cR9IPU3mkgCA&callback=myMap"></script>
+
+</body>
+</html>
