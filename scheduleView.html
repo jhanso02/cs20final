@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+<style>
+    #schedule{
+        border: 2px solid rgb(163, 171, 243);
+        padding-left: 4px;
+        text-align: right;
+    }
+    .row{
+        display: flex;
+        flex-wrap: wrap;
+        position: center;
+        
+        /* adjust based on number of columns */
+        width: 100%; 
+        border: 1px solid rgb(0, 255, 128) ;
+        padding: 3px;
+    }
+
+    .column{ /* adjust based on number of columns */
+        /* flex: 25%;*/
+        border: 1px solid red; 
+        padding: 15px; 
+        min-width:100px; 
+        min-width:20%;
+        display: inline-block;
+        margin-left: 1%;
+    }
+    .visibility{
+        display: none;
+    }
+    .button {
+        background-color: #ffffff;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size:100%;
+        padding: 2px 15px;
+    }
+
+    /* Minimize the grid not push to bottom */
+</style>
+</head>
+<body>
+    <div id="schedule"> 
+        <p>
+            View:
+            3-day <input type="radio" name="view" value="3-day">
+            Week <input type="radio" name="view" value="week">
+            
+            <form action = "http://localhost:3000/process" method="POST" >
+                <input type="submit" name="edit" class="button" value=" Edit ">
+            </form>
+        </p>
+    </div>
+
+    <script language="javascript">
+        week = ["Sunday", "Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        weekly = new Boolean(false);
+        days = [];
+        let clicked = 0; 
+        
+        $(document).ready(function(){
+            condensedView(); 
+            $(".visibility").hide(); // hides the additional collumns in the schedule
+            $('input[type="radio"]').click(function(){
+                if( $('input[type="radio"]:checked').val()== "3-day"){
+                    $(".visibility").hide(); 
+                }else{
+                    weekly = true; 
+                    $(".visibility").toggle();
+                    clicked++;
+                    weeklyView();
+                }
+            });
+        });
+        
+        function condensedView(){
+            const d = new Date();
+            let start = d.getDay()%7;
+            let nextDay = (start+1)%7;
+            let dayAfter = (start+2)%7;
+            days = [week[start],week[nextDay],week[dayAfter]];
+
+            for(i=0; i<3; i++){
+                document.getElementById('label'+i).innerHTML += days[i] + " " ;
+            }
+            style();
+        };
+
+        function weeklyView(){
+            const d = new Date();
+            let start = d.getDay()%7; 
+            
+            if (clicked == 1){
+                for(i=3; i<7; i++){
+                    if(i<=5){
+                        days.push(week[start+i]);
+                        document.getElementById('label'+i).innerHTML += days[i] + " " ;
+                    }else{
+                        days.push(week[0]); 
+                        document.getElementById('label'+i).innerHTML += days[6] + " " ;
+                    }
+                }
+            }
+        }
+
+        function style(){
+            for(i=0;i<7;i++){
+                document.getElementById('label'+i).style.textAlign = "center";
+                document.getElementById('label'+i).style.fontFamily = "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
+            }
+        }
+    </script>
+
+    <div class="row" style="border: 0px;">
+        <div class="column"> <!-- Maximum of 10 things in a column -->
+            <div id="label0"></div>
+            <div class="row">
+                <!-- TO DO: DISPLAY THE INFO FROM THE DATABASE -->
+                <h2>1</h2>
+                
+            </div>
+            <div class="row">
+                <h2>3</h2>
+            </div>
+            <div class="row">
+                <h2>4</h2>
+            </div>
+        </div>
+
+        <div class="column"> <!-- Maximum of 5 things in a column -->
+            <div id="label1"></div>
+            <div class="row">
+                <h2>1</h2>
+            </div>
+            <div class="row">
+                <h2>2</h2>
+            </div>
+            <div class="row">
+                <h2>3</h2>
+            </div>
+        </div>
+
+        <div class="column"> <!-- Maximum of 10 things in a column -->
+            <div id="label2"></div>
+            <div class="row">
+                <h2>1</h2>
+            </div>
+            <div class="row">
+                <h2>2</h2>
+            </div>
+            <div class="row">
+                <h2>4</h2>
+            </div>
+        </div>
+
+        <div class="column visibility" > <!-- Maximum of 10 things in a column -->
+            <div id="label3"></div>
+            <div class="row">
+                <h2>3</h2>
+            </div>
+            <div class="row">
+                <h2>5</h2>
+            </div>
+            <div class="row">
+                <h2>2</h2>
+            </div>
+        </div>
+
+        <div class="column visibility" > <!-- Maximum of 10 things in a column -->
+            <div id="label4"></div>
+            <div class="row">
+                <h2>1</h2>
+            </div>
+            <div class="row">
+                <h2>3</h2>
+            </div>
+            <div class="row">
+                <h2>4</h2>
+            </div>
+        </div>
+
+        <div class="column visibility" > <!-- Maximum of 10 things in a column -->
+            <div id="label5"></div>
+            <div class="row">
+                <h2>1</h2>
+            </div>
+            <div class="row">
+                <h2>3</h2>
+            </div>
+            <div class="row">
+                <h2>4</h2>
+            </div>
+        </div>
+
+        <div class="column visibility" > <!-- Maximum of 10 things in a column --> 
+            <div id="label6"></div>
+            <div class="row">
+                <h2>1</h2>
+            </div>
+            <div class="row">
+                <h2>3</h2>
+            </div>
+            <div class="row">
+                <h2>4</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
