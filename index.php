@@ -278,7 +278,7 @@
 </script>
 
 <!-- **********************MAPS WIDGET************************* -->
-<div class="widget left map" id="googleMap" style="height:300px;">
+<div class="widget left map" id="googleMap" style="height:200px;">
     <h2>Campus Map</h2>
     
     <script>
@@ -291,8 +291,280 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBIktyyp-E6l_1Hjn2Io9cR9IPU3mkgCA&callback=myMap"></script>
+</div>
+	
+<!-- **********************Schedule WIDGET************************* -->
+<div class = "widget left sched">
+    <div id="schedule"> 
+        <p>
+        <!--action='scheduleForm.php'-->
+            <form onsubmit="editData()">
+            View:
+            3-day <input type="radio" name="view" value="3-day">
+            Week <input type="radio" name="view" value="week">
+            <input type="submit" name="edit" class="button" value="Edit" >
+            </form>
+        </p>
+    </div>
 
-    
+    <script language="javascript">
+        // Opens the schedule form 
+        function editData(){
+           window.open('scheduleForm.php', 'Order', 'width=550,height=500');
+        }
+
+        week = ["Sunday", "Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        weekly = new Boolean(false);
+        days = [];
+        let clicked = 0; 
+
+        $(document).ready(function(){
+            condensedView(); 
+            $(".visibility").hide(); // hides the additional collumns in the schedule
+            $('input[type="radio"]').click(function(){
+                if( $('input[type="radio"]:checked').val()== "3-day"){
+                    $(".visibility").hide(); 
+                }else{
+                    weekly = true; 
+                    $(".visibility").toggle();
+                    clicked++;
+                    weeklyView();
+                }
+            });
+        });
+        
+        function condensedView(){
+            const d = new Date();
+            let start = d.getDay()%7;
+            let nextDay = (start+1)%7;
+            let dayAfter = (start+2)%7;
+            days = [week[start],week[nextDay],week[dayAfter]];
+
+            for(i=0; i<3; i++){
+                document.getElementById('label'+i).innerHTML += days[i] + " " ;
+            }
+            style();
+        };
+
+        function weeklyView(){
+            const d = new Date();
+            let start = d.getDay()%7; 
+            
+            if (clicked == 1){
+                for(i=3; i<7; i++){
+                    if(i<=5){
+                        days.push(week[start+i]);
+                        document.getElementById('label'+i).innerHTML += days[i] + " " ;
+                    }else{
+                        days.push(week[0]); 
+                        document.getElementById('label'+i).innerHTML += days[6] + " " ;
+                    }
+                }
+            }
+
+        }
+
+        function style(){
+            for(i=0;i<7;i++){
+                document.getElementById('label'+i).style.textAlign = "center";
+                document.getElementById('label'+i).style.fontFamily = "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
+            }
+        }
+
+    </script>
+
+    <?php
+        // Establish connection 
+        $servername = "sql103.epizy.com";
+        $userid = "epiz_29681768";
+        $password = "tbF411sjrbvGjC";
+        $database = "epiz_29681768_schedule";
+
+        // Create connection
+        $conn = new mysqli($servername, $userid, $password );
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // select and connect to the database
+        $conn->select_db($database);
+
+        // run a query to get information 
+        $sql = "SELECT * FROM Days";
+        $result = $conn->query($sql);
+        
+        $Days = array();
+        $Class= array();
+
+        // get results 
+        if ($result->num_rows > 0) { 
+            while($row = $result->fetch_array()){
+                // Add the items to the array
+                $Days[]= $row[0];
+                $Class[]=$row[1];   
+            }
+        } else {
+            echo "no results";
+        }
+
+        $x = count($Days);
+        $y = count($Class);
+        $freq = 0;
+        $index = 0;
+
+        // Getting Today
+        $m = date("l");
+
+        $week = ["Sunday", "Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        
+        $d = array();
+        $d1 = array();
+        $d2 = array();
+        $d3 = array();
+        $d4 = array();
+        $d5 = array();
+        $d6 = array();
+
+        //echo "freq: ", $freq;
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d,$Class[$i]);
+            }
+        }
+        for($i=0;$i<$x;$i++){
+            if( $m == $week[$i]){
+                $index = $i;
+            }
+        }
+        $m = $week[($index+1)%7];
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d1,$Class[$i]);
+            }
+        }
+        $m = $week[($index+2)%7];
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d2,$Class[$i]);
+            }
+        }
+        $m = $week[($index+3)%7];
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d3,$Class[$i]);
+            }
+        }
+        $m = $week[($index+4)%7];
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d4,$Class[$i]);
+            }
+        }
+        $m = $week[($index+5)%7];
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d5,$Class[$i]);
+            }
+        }
+        $m = $week[($index+6)%7];
+        for($i=0;$i<$x;$i++){
+            if( $m == $Days[$i]){
+                $freq ++; 
+                array_push($d6,$Class[$i]);
+            }
+        }
+
+        //close the connection	
+        $conn->close();
+    ?>
+
+    <div class="row" style="border: 0px;">
+        <div class="column">
+            <div id="label0"></div>
+            <div class="row">
+                <!-- Displaying information -->
+                <?php
+                    for($i=0;$i<count($d);$i++){
+                        echo $d[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="column"> 
+            <div id="label1"></div>
+            <div class="row">
+                <?php
+                    for($i=0;$i<count($d1);$i++){
+                        echo $d1[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="column"> 
+            <div id="label2"></div>
+            <div class="row">
+                <?php
+                    for($i=0;$i<count($d2);$i++){
+                        echo $d2[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="column visibility">
+            <div id="label3"></div>
+            <div class="row">
+                <?php
+                    for($i=0;$i<count($d3);$i++){
+                        echo $d3[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="column visibility"> 
+            <div id="label4"></div>
+            <div class="row">
+                <?php
+                    for($i=0;$i<count($d4);$i++){
+                        echo $d4[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="column visibility">
+            <div id="label5"></div>
+            <div class="row">
+                <?php
+                    for($i=0;$i<count($d5);$i++){
+                        echo $d5[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="column visibility">
+            <div id="label6"></div>
+            <div class="row">
+                <?php
+                    for($i=0;$i<count($d6);$i++){
+                        echo $d6[$i],"<br> ";
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
