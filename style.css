@@ -1,35 +1,28 @@
-.form-item .budget_log
-{
-    display: block;
-    margin-bottom: 10px;
-}
 
-.form-item .cost
-{
-    width: 70px;
-}
+
+
 
 .widget
 {
     box-sizing: border-box;
     border-radius: 10px;
     display: block;
-    margin: 3%;
+    margin: 1% 0 1% 0.5%;
 }
 
 .weather_box{
-    padding: 2% 8px 0px 8px;
+    padding: 0px 8px 0px 8px;
     width: 20%;
     color: rgb(82, 182, 185);
 }
 
 body {
-    margin-left: 2%;
+    margin-left:  2%;
+    margin-right: 2%;
     background-color: #FEF1E6;
 }
 
 .budget {
-    width: 500px;
     height: 800px;
     padding: 10px 20px;
     background-color: #90AACB;
@@ -40,6 +33,17 @@ body {
     box-sizing: border-box;
     border-radius: 5px;
     background-color: #bcb5eb;
+}
+
+.form-item .cost
+{
+    width: 15%;
+}
+
+.form-item .budget_log
+{
+    display: block;
+    margin-bottom: 10px;
 }
 
 #showMore {

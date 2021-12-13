@@ -19,19 +19,32 @@
 
     <link rel="stylesheet" href="style.css">
     <style type="text/css">
-
-        .column {
-            display: inline-block;
-            width: 40%;
-            /* padding: 20px 20px 20px 20px; */
+        
+        /* Columnds */
+        .right {
+            float: right;
+            width: 46%;
+        }
+        .left {
+            float: left;
+            width: 46%
         }
          /* Responsive columns */
         @media screen and (max-width: 600px) {
-            .column {
+            .left {
                 width: 100%;
                 display: block;
                 margin-bottom: 20px;
             }
+            .right {
+                width: 100%;
+                display: block;
+                margin-bottom: 20px;
+            }
+        }
+
+        textarea {
+            max-width:95%;
         }
 
     </style>
@@ -45,7 +58,7 @@
 
 <!-- ****************************WEATHER WIDGET*********************** -->
 
-<div class="widget column weather_box">
+<div class="widget left weather_box">
     <a class="weatherwidget-io"
     href="https://forecast7.com/en/42d42n71d11/medford/?unit=us"
     data-label_1="TUFTS" data-label_2="UNIVERSITY" data-theme="original">TUFTS
@@ -65,9 +78,42 @@
     (document,'script','weatherwidget-io-js');
 </script>
 
+<!-- ********************Quote WIDGET ********************************* -->
+<div class="widget right quote" >
+    <h2> Daily Dose of Inspiration </h2>
+	<div id="random1"> &nbsp; </div>
+	<div id="random"> &nbsp; </div>
+</div>
+
+<script>
+    var quote;
+
+    function getQuote() {
+
+        request = new XMLHttpRequest();
+
+        request.open("GET", "https://api.quotable.io/random?maxLength=50", true);
+
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+
+                var result = request.responseText;
+
+                var object = JSON.parse(result, function (key, value) {
+                    if (key == "content") {
+                    quote = value;
+                    }
+                })
+            }	
+        document.getElementById("random1").innerHTML=quote;
+        }
+        request.send();
+    };
+
+</script>
 
 <!-- ****************************** BUDGET WIDGET ************************ -->
-<div class="widget column budget" id="budget_outline">
+<div class="widget right budget" id="budget_outline">
     <h2>Budget</h2>
 
     <!-- Progress bar section -->
@@ -213,9 +259,12 @@
         });
     });
     
+    // Body onload calls this 
     function click_history()
     {
-            // Initalize variables
+        // Get quote too
+        getQuote()
+        // Initalize variables
         var budget_percent = 0;
         var budget_max = 1000;
         var budget_used = 0;
@@ -227,6 +276,24 @@
 
 
 </script>
+
+<!-- **********************MAPS WIDGET************************* -->
+<div class="widget left map" id="googleMap" style="height:300px;">
+    <h2>Campus Map</h2>
+    
+    <script>
+        function myMap() {
+            var mapProp= {
+            center:new google.maps.LatLng(42.4085, -71.1183),
+            zoom:15,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBIktyyp-E6l_1Hjn2Io9cR9IPU3mkgCA&callback=myMap"></script>
+
+    
+</div>
 
 </body>
 </html>
