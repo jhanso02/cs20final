@@ -1,10 +1,62 @@
-.form-item .cost
+.form-item .budget_log
 {
-    width: 80px;
+    display: block;
+    margin-bottom: 10px;
 }
 
-.form-item .description
+.form-item .cost
 {
-    width:300px;
-    height: 80px;
+    width: 70px;
+}
+
+.widget
+{
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: block;
+    margin: 3%;
+}
+
+.weather_box{
+    padding: 2% 8px 0px 8px;
+    width: 20%;
+    color: rgb(82, 182, 185);
+}
+
+body {
+    margin-left: 2%;
+    background-color: #FEF1E6;
+}
+
+.budget {
+    width: 500px;
+    height: 800px;
+    padding: 10px 20px;
+    background-color: #90AACB;
+}
+
+.new_budget_entry {
+    padding: 10px 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #bcb5eb;
+}
+
+#showMore {
+    margin: 10px 0px;
+}
+
+.widget h2 {
+    text-align: center;
+}
+
+.progress_bar {
+    padding: 10px 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #3cd5eb;
+}
+
+h1 {
+    text-align: center;
 }

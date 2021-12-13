@@ -5,51 +5,33 @@
     <title>Coffee Break</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="description" content="Home page for the Coffee Break">
 	<meta name="keywords" content="college, organizer, planner, study, break">
 
     <!-- JQuery Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- For progress bar. May change -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
 
     <link rel="stylesheet" href="style.css">
     <style type="text/css">
-        body {
-            margin-left: 2%;
-            background-color: #FEF1E6;
-        }
 
-        .budget {
-            width: 500px;
-            height: 800px;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            border-radius: 10px;
-            background-color: #90AACB;
-            display: block;
+        .column {
+            display: inline-block;
+            width: 40%;
+            /* padding: 20px 20px 20px 20px; */
         }
-        .new_budget_entry {
-            padding: 10px 8px;
-            box-sizing: border-box;
-            border-radius: 5px;
-            background-color: #bcb5eb;
-        }
-
-        #showMore {
-            margin: 10px 0px;
-        }
-
-        .widget h2 {
-            text-align: center;
-        }
-        
-        .progress_bar {
-            padding: 10px 8px;
-            box-sizing: border-box;
-            border-radius: 5px;
-            background-color: #3cd5eb;
+         /* Responsive columns */
+        @media screen and (max-width: 600px) {
+            .column {
+                width: 100%;
+                display: block;
+                margin-bottom: 20px;
+            }
         }
 
     </style>
@@ -61,7 +43,31 @@
 
 <h1>Coffee Break</h1>
 
-<div class="widget budget" id="budget_outline">
+<!-- ****************************WEATHER WIDGET*********************** -->
+
+<div class="widget column weather_box">
+    <a class="weatherwidget-io"
+    href="https://forecast7.com/en/42d42n71d11/medford/?unit=us"
+    data-label_1="TUFTS" data-label_2="UNIVERSITY" data-theme="original">TUFTS
+    UNIVERSITY</a>
+</div>
+
+<script>
+    !function(d,s,id){
+        var js,fjs = d.getElementsByTagName(s)[0];
+        if(!d.getElementById(id)){
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://weatherwidget.io/js/widget.min.js';
+            fjs.parentNode.insertBefore(js,fjs);
+        }
+    }
+    (document,'script','weatherwidget-io-js');
+</script>
+
+
+<!-- ****************************** BUDGET WIDGET ************************ -->
+<div class="widget column budget" id="budget_outline">
     <h2>Budget</h2>
 
     <!-- Progress bar section -->
@@ -149,22 +155,11 @@
     $conn->close();
     ?>
 
-
+    <body onload="click_history()">
 </div>
 
 
 <script language="javascript">
-
-    var budget_percent = 0;
-    var budget_max = 1000;
-    var budget_used = 0;
-
-    
-    window.onload = function()
-    {
-        // var elem = document.getElementById("b_history");
-        // elem.click();
-    }
 
     // Update progress bar
     function update_progress()
@@ -192,9 +187,10 @@
     {
         var total = 0;
         var table = document.getElementById("b_history");
-        for (var i = 0; i < table.rows.length; i++) {
+        for (var i = 1; i < table.rows.length; i++) {
+            alert("Cell value: " + table.rows[i].cells[1].innerHTML);
             total += parseFloat(table.rows[i].cells[1].innerHTML);
-            alert("sub Total is:" + total);
+            // alert("sub Total is:" + total);
         }
         return total;
     }
@@ -211,13 +207,23 @@
             data: "count=$number",
             success: function(data){
                 // Add information to table
-                window.alert(data);
-                $('#b_history').append(data);
-                // $('#b_history tr:last').after(data);
+                $('#b_history').html(data);
             }
             });
         });
     });
+    
+    function click_history()
+    {
+            // Initalize variables
+        var budget_percent = 0;
+        var budget_max = 1000;
+        var budget_used = 0;
+
+        var elem = document.getElementById("showMore");
+        elem.click();
+        update_progress()
+    }
 
 
 </script>

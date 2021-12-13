@@ -12,15 +12,15 @@
 
     // Query
     $sql = "SELECT * FROM 'budget'";
-    // If query worked, log it
-    if($result = mysqli_query($conn, "SELECT * FROM budget")){
-       echo 'console.log("Select * query was executed!");';
+    // If query did not work, say so
+    if(!($result = mysqli_query($conn, "SELECT * FROM budget"))){
+       echo "Error querying";
     }
-
 
     if ($result->num_rows > 0) {
         while($row = mysqli_fetch_array($result))
         {
+            // Insert as table rows
             echo "<tr>";
             echo "<td>"   . $row['date']    . "</td>";
             echo "<td> $" . $row['amount']  . "</td>";
