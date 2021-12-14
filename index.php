@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" language="en">
 <head>
 
     <title>Coffee Break</title>
@@ -10,17 +10,19 @@
 	<meta name="description" content="Home page for the Coffee Break">
 	<meta name="keywords" content="college, organizer, planner, study, break">
 
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/6943534088.js" crossorigin="anonymous"></script>
+
     <!-- JQuery Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- For progress bar. May change -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     
-
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"/>
+    
     <style type="text/css">
-        
-        /* Columnds */
+        /* Columns */
         .right {
             float: right;
             width: 46%;
@@ -29,6 +31,41 @@
             float: left;
             width: 46%
         }
+        .row{
+            display: flex;
+            flex-wrap: wrap;
+            position: center;
+            padding: 3px;
+        }
+        #schedule{
+            padding-left: 4px;
+            text-align: right;
+        }
+        .column{ 
+            flex: 30%;
+            padding: 15px;
+             
+            width: calc(100% - 30px);
+            height: 200px;
+            display: inline-grid;
+            border: 2px solid black; 
+            margin-right: 3px;
+            margin-left: 3px;
+            margin-bottom: 1%;
+            font-size: small;
+            line-height: 200%;
+        }
+        .row1{
+            position: bottom;
+            width: 100%;
+            height: 20%;
+            float: none;
+            clear: both;
+            display: flex;
+            margin-bottom: 3%;
+        }
+        
+        
          /* Responsive columns */
         @media screen and (max-width: 600px) {
             .left {
@@ -42,38 +79,17 @@
                 margin-bottom: 20px;
             }
         }
-
         textarea {
             max-width:95%;
         }
-		/* quote widget style*/
-		h2 {
-			font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
-			font-size: 25px; 
-			text-align: center; 
-			background-color: aliceblue;
-			margin: 5%;
-		}
-		
-		.random1 {
-			font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
-			font-size: 20px; 
-			text-align: center; 
-			background-color: aliceblue;
-			margin: 5%;
-		}
-		
     </style>
-
 </head>
-
 
 <body>
 
-<h1>Coffee Break</h1>
+<h1 style="font-size:400%"> Coffee Break </h1>
 
 <!-- ****************************WEATHER WIDGET*********************** -->
-
 <div class="widget left weather_box">
     <a class="weatherwidget-io"
     href="https://forecast7.com/en/42d42n71d11/medford/?unit=us"
@@ -97,7 +113,8 @@
 <!-- ********************Quote WIDGET ********************************* -->
 <div class="widget right quote" >
     <h2> Daily Dose of Inspiration </h2>
-	<div id="random1"> &nbsp; </div>
+	<div id="random1">  
+    <h6> &nbsp; </div>
 	<div id="random"> &nbsp; </div>
 </div>
 
@@ -125,7 +142,6 @@
         }
         request.send();
     };
-
 </script>
 
 <!-- ****************************** BUDGET WIDGET ************************ -->
@@ -173,7 +189,6 @@
         <th>Description</th>
     </table>
     
-
     <!-- PHP- used for connection to database -->
     <?php
     //establish connection info
@@ -211,10 +226,8 @@
     // Close connection
     $conn->close();
     ?>
-
     <body onload="click_history()">
 </div>
-
 
 <script language="javascript">
 
@@ -243,7 +256,6 @@
             console.log(" in less than 100 case for:" + budget_percent + '%');
             elem.style.width = budget_percent + '%';
             console.log("elem style width is: " + elem.style.width);
-
         }
         elem.innerHTML = budget_percent.toFixed(2) + '% Used';
         document.getElementById("bud_fraction").innerHTML = "$" + budget_used.toFixed(2) + " / $" + budget_max.toFixed(2);
@@ -300,11 +312,10 @@
         elem.click();
         update_progress();
     }
-
-
 </script>
+
 <!-- **********************MAPS WIDGET************************* -->
-<div class="widget left map" id="googleMap" style="height:200px;">
+<div class="widget left map ms" id="googleMap" style="height:200px;">
     <h2>Campus Map</h2>
     
     <script>
@@ -317,18 +328,18 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBIktyyp-E6l_1Hjn2Io9cR9IPU3mkgCA&callback=myMap"></script>
+ 
 </div>
-	
+
 <!-- **********************Schedule WIDGET************************* -->
 <div class = "widget left sched">
     <div id="schedule"> 
         <p>
-        <!--action='scheduleForm.php'-->
             <form onsubmit="editData()">
             View:
             3-day <input type="radio" name="view" value="3-day">
             Week <input type="radio" name="view" value="week">
-            <input type="submit" name="edit" class="button" value="Edit" >
+            <input type="submit" name="edit" class="button" value="EDIT" >
             </form>
         </p>
     </div>
@@ -375,19 +386,15 @@
         function weeklyView(){
             const d = new Date();
             let start = d.getDay()%7; 
-            
+        
             if (clicked == 1){
                 for(i=3; i<7; i++){
-                    if(i<=5){
-                        days.push(week[start+i]);
+                    if(i<=6){
+                        days.push(week[(start+i)%7]);
                         document.getElementById('label'+i).innerHTML += days[i] + " " ;
-                    }else{
-                        days.push(week[0]); 
-                        document.getElementById('label'+i).innerHTML += days[6] + " " ;
                     }
                 }
             }
-
         }
 
         function style(){
@@ -396,7 +403,6 @@
                 document.getElementById('label'+i).style.fontFamily = "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
             }
         }
-
     </script>
 
     <?php
@@ -507,7 +513,6 @@
                 array_push($d6,$Class[$i]);
             }
         }
-
         //close the connection	
         $conn->close();
     ?>
@@ -516,7 +521,6 @@
         <div class="column">
             <div id="label0"></div>
             <div class="row">
-                <!-- Displaying information -->
                 <?php
                     for($i=0;$i<count($d);$i++){
                         echo $d[$i],"<br> ";
@@ -582,7 +586,7 @@
 
         <div class="column visibility">
             <div id="label6"></div>
-            <div class="row">
+            <div class="row" >
                 <?php
                     for($i=0;$i<count($d6);$i++){
                         echo $d6[$i],"<br> ";
@@ -590,6 +594,29 @@
                 ?>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- ****************************** Campus Icons  ************************ -->
+<div class="row1" >
+    <div class='staar_center'>
+        StAAR Center <br>
+        <i class="fab fa-instagram"><a href="https://www.instagram.com/staarcenter/"> @staarcenter</a></i><br>
+        <i class="fab fa-facebook"><a href="https://www.facebook.com/StAAR.Center/"> @staarcenter</a></i><br>
+        <br><br>
+    </div>
+
+    <div class='first_center'>
+        FIRST Resource Center <br>
+        <i class="fab fa-instagram"><a href="https://www.instagram.com/tuftsfirst/"> @tuftsfirst</a></i><br>
+        <br><br>
+    </div>
+
+    <div class='tufts_ocl'>
+        Office For Campus Life <br>
+        <i class="fab fa-instagram"><a href="https://www.instagram.com/tuftsocl/?hl=en"> @tuftsocl</a></i><br>
+        <i class="fab fa-facebook"><a href="https://www.facebook.com/tuftsocl/"> @tuftsocl</a></i><br>
+        <br><br>
     </div>
 </div>
 
