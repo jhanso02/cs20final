@@ -46,7 +46,7 @@
             padding: 15px;
              
             width: calc(100% - 30px);
-            height: 200px;
+            height: 150px;
             display: inline-grid;
             border: 2px solid black; 
             margin-right: 3px;
@@ -78,6 +78,10 @@
                 display: block;
                 margin-bottom: 20px;
             }
+	    .column{ 
+                height: 200px;
+            }
+		
         }
         textarea {
             max-width:95%;
