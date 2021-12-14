@@ -46,7 +46,23 @@
         textarea {
             max-width:95%;
         }
-
+		/* quote widget style*/
+		h2 {
+			font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+			font-size: 25px; 
+			text-align: center; 
+			background-color: aliceblue;
+			margin: 5%;
+		}
+		
+		.random1 {
+			font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+			font-size: 20px; 
+			text-align: center; 
+			background-color: aliceblue;
+			margin: 5%;
+		}
+		
     </style>
 
 </head>
