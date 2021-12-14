@@ -135,15 +135,10 @@
     <!-- Progress bar section -->
     <div class="progress">
 
-        <div class="w3-light-grey progress_bar">
-            <div id="pro_bar" class="w3-container w3-green" style="height:24px; width:0%;"></div>
+        <div class="w3-light-grey w3-round">
+            <div id="pro_bar" class="w3-container w3-round w3-blue" style="height:24px; width:0%;"></div>
         </div>
-
-        <p id="percent_used">0%</p>
-
-        <!-- <button class="button" onclick="update_progress()">Update Progress</button>  -->
-
-        <p> $xx / $xxx </p>
+        <p id="bud_fraction"> $xx / $xxx </p>
 
     </div>
 
@@ -223,37 +218,55 @@
 
 <script language="javascript">
 
+    // Initalize variables
+    var budget_percent = 0;
+    var budget_max = 1000;
+    var budget_used = 0;
+
     // Update progress bar
     function update_progress()
     {
+        console.log("Entered update_progress()");
         var elem = document.getElementById("pro_bar");
         budget_used = calculate_total();
 
         // Update budget % variable
         budget_percent = (budget_used * 100) / budget_max;
+        console.log("Budget used:" + budget_used);
+        console.log("Budget max:" + budget_max);
+        console.log("Budget per:" + budget_percent);
         if (budget_percent > 100) {
-            alert("<p> in greater than 100 case</p>");
-            elem.style.width = 100 + '%'; 
+            console.log("<p> in greater than 100 case</p>");
+            elem.style.width = 100 + '%';   
         } else {
             // Update bar drawing
-            alert(" in less than 100 case for:" + budget_percent + '%');
+            console.log(" in less than 100 case for:" + budget_percent + '%');
             elem.style.width = budget_percent + '%';
-            alert("elem style width is: " + elem.style.width);
-            
+            console.log("elem style width is: " + elem.style.width);
+
         }
-        document.getElementById("percent_used").innerHTML = budget_percent * 1 + '% Used';
+        elem.innerHTML = budget_percent.toFixed(2) + '% Used';
+        document.getElementById("bud_fraction").innerHTML = "$" + budget_used.toFixed(2) + " / $" + budget_max.toFixed(2);
         
     }
 
     function calculate_total()
     {
-        var total = 0;
-        var table = document.getElementById("b_history");
-        for (var i = 1; i < table.rows.length; i++) {
-            alert("Cell value: " + table.rows[i].cells[1].innerHTML);
-            total += parseFloat(table.rows[i].cells[1].innerHTML);
-            // alert("sub Total is:" + total);
+        console.log("Entered calculate total");
+        let total = 0;
+        let table = document.getElementById("b_history");
+        console.log("Table rows len is: " + table.rows.length);
+        console.log(table);
+        for (let i = 1; i < table.rows.length; i++) {
+            let text = table.rows[i].cells[1].innerHTML;
+            text = text.substring(1);
+            console.log("TEXT:" + text + ".");
+            let row_num = parseFloat(text);
+            console.log("NUm and type:" + row_num + typeof(row_num));
+            total += row_num;
+            console.log("sub Total is:" + total);
         }
+        console.log("Total to be retuned is: $" + total);
         return total;
     }
 
@@ -261,15 +274,17 @@
     $(function(){
         $('#showMore').click(function(event) {
             event.preventDefault();
-
+            console.log("Show more was clicked");
             // Process in provessbud.php
             $.ajax({
             type: "POST",
             url: "processbud.php",
             data: "count=$number",
             success: function(data){
-                // Add information to table
+                // Add information to table                
                 $('#b_history').html(data);
+                // Update totals
+                update_progress();
             }
             });
         });
@@ -279,20 +294,15 @@
     function click_history()
     {
         // Get quote too
-        getQuote()
-        // Initalize variables
-        var budget_percent = 0;
-        var budget_max = 1000;
-        var budget_used = 0;
+        getQuote();
 
         var elem = document.getElementById("showMore");
         elem.click();
-        update_progress()
+        update_progress();
     }
 
 
 </script>
-
 <!-- **********************MAPS WIDGET************************* -->
 <div class="widget left map" id="googleMap" style="height:200px;">
     <h2>Campus Map</h2>
