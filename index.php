@@ -182,7 +182,7 @@
 
         <!-- View log. TODO: Make toggle -->
         <div class="viewlog">
-            <input type="button" name="b_log_view" id="showMore" value="View History"/>
+            <input type="button" class="button" name="b_log_view" id="showMore" value="View History"/>
         </div>
     </form>
 
