@@ -156,7 +156,9 @@
     <div class="progress">
 
         <div class="w3-light-grey w3-round">
-            <div id="pro_bar" class="w3-container w3-round w3-blue" style="height:24px; width:0%;"></div>
+            <div id="pro_bar" class="w3-container w3-round" style="height:30px; width:0%;">
+                <div id="pro_label"> </div>
+            </div>
         </div>
         <p id="bud_fraction"> $xx / $xxx </p>
 
@@ -180,14 +182,14 @@
         <input type="submit" name="submit_budget" class='submit'>
         </div>
 
-        <!-- View log. TODO: Make toggle -->
+
         <div class="viewlog">
             <input type="button" class="button" name="b_log_view" id="showMore" value="View History"/>
         </div>
     </form>
 
     <!-- Budget history -->
-    <table id="b_history">
+    <table id="b_history" >
         <th>Date</th>
         <th>Amount</th>
         <th>Description</th>
@@ -243,25 +245,20 @@
     // Update progress bar
     function update_progress()
     {
-        console.log("Entered update_progress()");
         var elem = document.getElementById("pro_bar");
         budget_used = calculate_total();
 
         // Update budget % variable
         budget_percent = (budget_used * 100) / budget_max;
-        console.log("Budget used:" + budget_used);
-        console.log("Budget max:" + budget_max);
-        console.log("Budget per:" + budget_percent);
         if (budget_percent > 100) {
-            console.log("<p> in greater than 100 case</p>");
             elem.style.width = 100 + '%';   
         } else {
             // Update bar drawing
-            console.log(" in less than 100 case for:" + budget_percent + '%');
             elem.style.width = budget_percent + '%';
             console.log("elem style width is: " + elem.style.width);
         }
-        elem.innerHTML = budget_percent.toFixed(2) + '% Used';
+        document.getElementById("pro_label").innerHTML = budget_percent.toFixed(2) + '% Used';
+
         document.getElementById("bud_fraction").innerHTML = "$" + budget_used.toFixed(2) + " / $" + budget_max.toFixed(2);
         
     }
@@ -271,6 +268,10 @@
         console.log("Entered calculate total");
         let total = 0;
         let table = document.getElementById("b_history");
+
+        // Toggle table view
+        $("#b_history").toggle();
+
         console.log("Table rows len is: " + table.rows.length);
         console.log(table);
         for (let i = 1; i < table.rows.length; i++) {
@@ -300,6 +301,11 @@
                 // Add information to table                
                 $('#b_history').html(data);
                 // Update totals
+                if ($('#b_history').is(':visible')) {
+                    document.getElementById("showMore").value = "Hide"
+                } else {
+                    document.getElementById("showMore").value = "Show Log"
+                }
                 update_progress();
             }
             });
@@ -341,7 +347,7 @@
         <p>
             <form onsubmit="editData()">
             View:
-            3-day <input type="radio" name="view" value="3-day">
+            3-day <input type="radio" name="view" value="3-day" checked="checked">
             Week <input type="radio" name="view" value="week">
             <input type="submit" name="edit" class="button" value="EDIT" >
             </form>

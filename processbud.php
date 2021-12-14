@@ -18,13 +18,14 @@
     }
 
     if ($result->num_rows > 0) {
+        echo "<tr> <th>Date</th> <th>Amount</th><th>Description</th> </tr>";
         while($row = mysqli_fetch_array($result))
         {
             // Insert as table rows
             echo "<tr>";
-            echo "<td>"   . $row['date']    . "</td>";
-            echo "<td> $" . $row['amount']  . "</td>";
-            echo "<td> "  . $row['descrip'] . "</td>";
+            echo "<td>"  . $row['date']    . "</td>";
+            echo "<td>$" . number_format($row['amount'], 2, '.', "")  . "</td>";
+            echo "<td>"  . $row['descrip'] . "</td>";
             echo "</tr>";
         }
     } else {

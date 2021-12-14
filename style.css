@@ -42,6 +42,10 @@ body {
     margin-bottom: 10px;
 }
 
+#b_history {
+    display: none;
+}
+
 #showMore {
     margin: 10px 0px;
 }
@@ -50,12 +54,17 @@ body {
     text-align: center;
 }
 
-.progress_bar {
-    padding: 10px 8px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    background-color: #EDA909;
+#pro_bar {
+    background-color: #dd9c10;
 }
+
+#pro_label {
+    color: #FFF;
+    line-height: 30px;
+    min-width: 130px;
+    mix-blend-mode: exclusion;
+}
+
 
 .sched{
     background-color: #8ADFE9;
@@ -79,12 +88,17 @@ a {
 }
 .button {
     background-color: #8ADEF9;
-    border: none;
+    border: 1px #59b2cf;
+    border-radius: 2px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size:large;
     padding: 2px 15px;
+}
+
+.button:hover {
+    background-color: #59b2cf;
 }
 
 h1 {
