@@ -162,6 +162,7 @@
             </div>
         </div>
         <p id="bud_fraction"> $xx / $xxx </p>
+        <button onclick="edit_limit()" class="button" name="edit_max" id="edit_max">Edit Limit</button>
 
     </div>
 
@@ -172,7 +173,7 @@
         <p><strong>New Entry</strong></p>
         <div class='form-item' id="amount_spent">
             <div class='budget_log'>Amount Spent: $
-            <input type='number' min="0" step="0.01" name="cost" class="cost">
+            <input type='number'  step="0.01" name="cost" class="cost">
             </div>
         </div>
         <div class='form-item' style="vertical-align: top;">
@@ -184,9 +185,13 @@
         </div>
     </form>
     
+    
+    
     <div class="viewlog">
         <input type="button" class="button" name="b_log_view" id="showMore" value="View History"/>
     </div>
+
+    
 
     <!-- Budget history -->
     <table id="b_history" >
@@ -239,7 +244,7 @@
 
     // Initalize variables
     var budget_percent = 0;
-    var budget_max = 1000;
+    var budget_max = 0;
     var budget_used = 0;
 
     // Update progress bar
@@ -255,7 +260,6 @@
         } else {
             // Update bar drawing
             elem.style.width = budget_percent + '%';
-            console.log("elem style width is: " + elem.style.width);
         }
         document.getElementById("pro_label").innerHTML = budget_percent.toFixed(2) + '% Used';
 
@@ -265,19 +269,14 @@
 
     function calculate_total()
     {
-        console.log("Entered calculate total");
         let total = 0;
         let table = document.getElementById("b_history");
-        console.log("Table rows len is: " + table.rows.length);
         console.log(table);
         for (let i = 1; i < table.rows.length; i++) {
             let text = table.rows[i].cells[1].innerHTML;
             text = text.substring(1);
-            console.log("TEXT:" + text + ".");
             let row_num = parseFloat(text);
-            console.log("NUm and type:" + row_num + typeof(row_num));
             total += row_num;
-            console.log("sub Total is:" + total);
         }
         console.log("Total to be retuned is: $" + total);
         return total;
@@ -318,7 +317,19 @@
 
         var elem = document.getElementById("showMore");
         elem.click();
-        // update_progress();
+    }
+
+
+    function edit_limit()
+    {
+        var new_limit = prompt("Please enter a new Budget limit","0.00");
+        n = parseInt(new_limit);
+        if (isNaN(n)){
+            alert("Error: Limit must be a number");
+        } else {
+            budget_max = n;
+        }
+        update_progress();
     }
 </script>
 
@@ -345,9 +356,9 @@
         <p>
             <form onsubmit="editData()">
             View:
-            3-day <input type="radio" name="view" value="3-day" checked="checked">
-            Week <input type="radio" name="view" value="week">
-            <input type="submit" name="edit" class="button" value="EDIT" >
+            3-day <input type="radio" name="view" value="3-day" checked="checked" style="margin-right: 1%;">
+            Week <input type="radio" name="view" value="week" style="margin-right: 1%;">
+            <input type="submit" name="edit" class="button" value="EDIT" style="margin-right:4px;">
             </form>
         </p>
     </div>
@@ -609,21 +620,21 @@
 <div class="row1" >
     <div class='staar_center'>
         StAAR Center <br>
-        <i class="fab fa-instagram"><a href="https://www.instagram.com/staarcenter/"> @staarcenter</a></i><br>
-        <i class="fab fa-facebook"><a href="https://www.facebook.com/StAAR.Center/"> @staarcenter</a></i><br>
+        <i class="fab fa-instagram"><a href="https://www.instagram.com/staarcenter/" target="_blank"> @staarcenter</a></i><br>
+        <i class="fab fa-facebook"><a href="https://www.facebook.com/StAAR.Center/" target="_blank"> @staarcenter</a></i><br>
         <br><br>
     </div>
 
     <div class='first_center'>
         FIRST Resource Center <br>
-        <i class="fab fa-instagram"><a href="https://www.instagram.com/tuftsfirst/"> @tuftsfirst</a></i><br>
+        <i class="fab fa-instagram"><a href="https://www.instagram.com/tuftsfirst/" target="_blank"> @tuftsfirst</a></i><br>
         <br><br>
     </div>
 
     <div class='tufts_ocl'>
         Office For Campus Life <br>
-        <i class="fab fa-instagram"><a href="https://www.instagram.com/tuftsocl/?hl=en"> @tuftsocl</a></i><br>
-        <i class="fab fa-facebook"><a href="https://www.facebook.com/tuftsocl/"> @tuftsocl</a></i><br>
+        <i class="fab fa-instagram"><a href="https://www.instagram.com/tuftsocl/?hl=en" target="_blank"> @tuftsocl</a></i><br>
+        <i class="fab fa-facebook"><a href="https://www.facebook.com/tuftsocl/" target="_blank"> @tuftsocl</a></i><br>
         <br><br>
     </div>
 </div>
