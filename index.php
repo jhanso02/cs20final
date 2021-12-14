@@ -85,6 +85,7 @@
         }
         textarea {
             max-width:95%;
+            vertical-align: top;
         }
     </style>
 </head>
@@ -165,28 +166,27 @@
     </div>
 
     <!-- When new entry is added, update progress bar -->
-    <form method="post" action="#" onsubmit="update_progress()">
+    <form method="post" action="" onsubmit="update_progress()">
         <!-- User input new budget entry -->
         <div class="new_budget_entry">
         <p><strong>New Entry</strong></p>
-        <div class='form-item'>
+        <div class='form-item' id="amount_spent">
             <div class='budget_log'>Amount Spent: $
             <input type='number' min="0" step="0.01" name="cost" class="cost">
             </div>
         </div>
-        <div class='form-item'>
+        <div class='form-item' style="vertical-align: top;">
             <div class='budget_log'>Description: 
-            <textarea name="description" class="description" rows="2" cols="40"></textarea>
+            <textarea name="description" class="description" rows="2" cols="20"></textarea>
             </div>
         </div>
         <input type="submit" name="submit_budget" class='submit'>
         </div>
-
-
-        <div class="viewlog">
-            <input type="button" class="button" name="b_log_view" id="showMore" value="View History"/>
-        </div>
     </form>
+    
+    <div class="viewlog">
+        <input type="button" class="button" name="b_log_view" id="showMore" value="View History"/>
+    </div>
 
     <!-- Budget history -->
     <table id="b_history" >
@@ -268,10 +268,6 @@
         console.log("Entered calculate total");
         let total = 0;
         let table = document.getElementById("b_history");
-
-        // Toggle table view
-        $("#b_history").toggle();
-
         console.log("Table rows len is: " + table.rows.length);
         console.log(table);
         for (let i = 1; i < table.rows.length; i++) {
@@ -296,16 +292,18 @@
             $.ajax({
             type: "POST",
             url: "processbud.php",
-            data: "count=$number",
+
             success: function(data){
-                // Add information to table                
+                // Add information to table
                 $('#b_history').html(data);
-                // Update totals
+                // Change button name then toggle table view
                 if ($('#b_history').is(':visible')) {
-                    document.getElementById("showMore").value = "Hide"
-                } else {
                     document.getElementById("showMore").value = "Show Log"
+                } else {
+                    document.getElementById("showMore").value = "Hide"
                 }
+                $("#b_history").toggle();
+                // Update progress variables
                 update_progress();
             }
             });
@@ -320,7 +318,7 @@
 
         var elem = document.getElementById("showMore");
         elem.click();
-        update_progress();
+        // update_progress();
     }
 </script>
 
